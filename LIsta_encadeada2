@@ -1,0 +1,49 @@
+#include<iostream>
+
+using namespace std;
+
+struct link{
+    int element;
+    link *next;
+};
+
+link *create_link(int it, link *nextval){
+	link *n=NULL;
+	n = (link*)malloc(sizeof(lista));
+	n->element = it;
+	n->next = nextval;
+	return n;
+}
+
+link *create_link(link *nextval){
+	link *n=NULL;
+	n = (link*)malloc(sizeof(lista));
+	n->next = nextval;
+	return n;
+}
+
+struct list{
+	link *head, *tail, *curr;
+	int cnt;
+};
+
+list *create_list(){
+	list *L=NULL;
+	L = (list*)malloc(sizeof(list));
+	L->curr = create_link(NULL);
+	L->tail = create_link(NULL);
+	L->head = create_link(NULL);
+	L->cnt = 0;
+	return L;
+}
+
+void insert(list *L,int it){
+	L->curr->next = 
+}
+
+int main(){
+   list *L=NULL;
+   L=create_list();
+   insert(L,15);
+    return 0;
+}
