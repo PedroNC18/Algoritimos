@@ -1,0 +1,85 @@
+#include<iostream>
+
+using namespace std;
+int rola=0;
+struct link{
+    int element;
+    link *next;
+};
+
+link *create_link(int it, link *nextval){
+	link *n=NULL;
+	n = (link*)malloc(sizeof(link));
+	n->element = it;
+	n->next = nextval;
+	return n;
+}
+
+link *create_link(link *nextval){
+	link *n=NULL;
+	n = (link*)malloc(sizeof(link));
+	n->next = nextval;
+	return n;
+}
+
+struct list{
+	link *head, *tail, *curr;
+	int cnt;
+};
+
+list *create_list(){
+	list *L=NULL;
+	L = (list*)malloc(sizeof(list));
+	L->curr = create_link(NULL);
+	L->tail = create_link(NULL);
+	L->head = create_link(NULL);
+	L->cnt = 0;
+	return L;
+}
+
+void clear(list *L){
+	L->curr = create_link(NULL);
+	L->tail = create_link(NULL);
+	L->head = create_link(NULL);
+	L->cnt;
+}
+
+void insert(list *L,int it){
+	L->curr->next = create_link(it,L->curr->next);
+	if(L->tail==L->curr){
+		L->tail = L->curr->next;
+	} 
+	(L->cnt)++;
+}
+
+bool check_final(list *L){
+	if(L->curr->next==L->tail){
+		return true;
+	}
+	else{
+		false;
+	}
+}
+
+void show(list *L){
+	list *temp=NULL;
+	temp = L;
+	temp->curr = temp->head;
+	while(check_final(L)){
+		rola++;
+		temp->curr = temp->curr->next;
+		cout << temp->curr->element << "----";
+	}
+	cout << "null" << endl;
+}
+
+int main(){
+   list *L=NULL;
+   L=create_list();
+   insert(L,15);
+   insert(L,20);
+   insert(L,25);
+   show(L);
+   cout << rola;
+   return 0;
+}
