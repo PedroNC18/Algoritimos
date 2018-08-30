@@ -5,6 +5,7 @@ using namespace std;
 struct lista{
     int val;
     lista *next;
+    int ctn=0;
 };
 
 bool list_end(lista *head){
@@ -39,6 +40,7 @@ lista *insert_node(lista *head, int val){
         curr = curr->next;
     }
     curr->next = create_node(val);
+    head->ctn++;
     return head;
 }
 
@@ -49,6 +51,7 @@ lista *insert_node(lista *head, int val, int pos){
         curr = curr->next;
     }
     curr->next = create_node(val,curr->next);
+    head->ctn++;
     return head;
 }
 
@@ -57,9 +60,9 @@ void show(lista *head){
     curr = head;
     while(!list_end(curr)){
         curr = curr->next;
-        cout << curr->val << "->";
+        cout << curr->val << " ";
     }
-    cout << "End-of-list" << endl;
+    cout << "--->End of list" <<" with ctn = " << head->ctn << endl;
 }
 
 lista *delete_node(lista *head){
@@ -72,6 +75,7 @@ lista *delete_node(lista *head){
         curr = curr->next;
     }
     old->next = nullptr;
+    head->ctn--;
     return head; 
 }
 
@@ -88,6 +92,7 @@ lista *delete_node(lista *head, int pos){
     }
     old->next = curr->next;
     free(curr);
+    head->ctn--;
     return head; 
 }
 
@@ -95,7 +100,8 @@ int main(void){
     lista *head=nullptr;
     head = new lista;
     head->next=nullptr;
-    int i;
+    head->ctn=0;
+    int i, ctn=0;
     for(i=1;i<6;i++){
         head = insert_node(head, i);
     }
