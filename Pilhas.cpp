@@ -54,7 +54,7 @@ int main(void){
     while(top->next!=nullptr){
         top = pop(top);
         show(top);
-}
+    }
     
     return 0;
 }
