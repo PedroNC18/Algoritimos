@@ -8,6 +8,15 @@ struct pilha {
     pilha *next;
 };
 int ctn=0;
+
+pilha *new_pilha(){
+    pilha *top=nullptr;
+    top = new pilha;
+    top->next = nullptr;
+    top->val = INF;
+    return top;
+}
+
 pilha *push(pilha *top, int val){
     pilha *p=nullptr;
     p = new pilha;
@@ -36,10 +45,7 @@ void show(pilha *top){
 }
 
 int main(void){
-    pilha *top=nullptr;
-    top = new pilha;
-    top->next = nullptr;
-    top->val = INF;
+    pilha *top=new_pilha();
     int i;
     for(i=1;i<=6;i++){
         top = push(top, i);
@@ -48,6 +54,7 @@ int main(void){
     while(top->next!=nullptr){
         top = pop(top);
         show(top);
-    }
+}
+    
     return 0;
 }
