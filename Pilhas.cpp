@@ -44,6 +44,10 @@ void show(pilha *top){
     cout << "Fim da lista, " << "ctn: " << ctn << endl;
 }
 
+int top_val(pilha *top){
+    return top->val; 
+}
+
 int main(void){
     pilha *top=new_pilha();
     int i;
