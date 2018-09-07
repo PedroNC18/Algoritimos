@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//selection sort
 void selection_sort(int vet[], int n){
 	int i, j, min;
 	for(i=0;i<n-1;i++){
@@ -19,7 +20,7 @@ void selection_sort(int vet[], int n){
 
 int main() {
 	ios::sync_with_stdio(0);
-    cin.tie(0);
+    	cin.tie(0);
     
 	int vet[100000], vetn=0;
 	cin >> vetn;
