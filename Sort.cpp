@@ -2,7 +2,7 @@
 
 using namespace std;
 
-//selection sort
+//SELECTION SORT
 void selection_sort(int vet[], int n){
 	int i, j, min;
 	for(i=0;i<n-1;i++){
@@ -18,6 +18,20 @@ void selection_sort(int vet[], int n){
 	}
 }
 
+//INSERTION SORT
+void insertion_sort(int vet[],int n){
+	int i, j, v;
+	for(i=0;i<n;i++){
+		v = vet[i];
+		j = i-1;
+		while(j>=0 && vet[j]>v){
+			vet[j+1] = vet[j];
+			j = j-1;
+		}
+		vet[j+1] = v;
+	}
+}
+
 int main() {
 	ios::sync_with_stdio(0);
     	cin.tie(0);
@@ -29,8 +43,8 @@ int main() {
 		cin >> vet[i];
 	}
 	
-	//---(COLOCAR UMA FUNCAO SORT NESSE LUGAR)----\\
-
+	//---(COLOCAR UMA FUNCAO SORT NESSE LUGAR)----//
+	
 	for(i=0;i<vetn;i++){
 		cout << vet[i] << " ";
 	}
