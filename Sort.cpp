@@ -117,7 +117,7 @@ int hoare_partition(int a[], int ini, int fin){
 }
 
 void quick_sort(int a[], int start, int end){
-	int q;
+	int q; 
 	if(end>start){
 		q = hoare_partition(a, start, end);
 		quick_sort(a,start, q);
