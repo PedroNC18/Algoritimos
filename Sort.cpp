@@ -126,6 +126,44 @@ void quick_sort(int a[], int start, int end){
 }
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  HEAP SORT  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+void bottom_up(int heap[], int n){
+    int k,v, i, j;
+    bool check;
+    for(i=n/2;i>=1;i--){
+        k = i;
+        check = false;
+        v = heap[i];
+        while(!check && (2*k)<=n){
+            j = 2*k;
+            if(j<n && heap[j]<heap[j+1]){
+                j++;
+            }
+            if(v>=heap[j]){
+                check = true;
+            }
+            else{
+                heap[k] = heap[j];
+                k = j;
+            }
+        }
+        heap[k] = v;
+    }
+}
+
+void heap_sort(int heap[], int n){
+    if(n>1){
+        bottom_up(heap, n);
+        int aux = heap[n];
+        heap[n] = heap[1];
+        heap[1] = aux;
+        heap_sort(heap, n-1);
+    }    
+}
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 int main() {
 	ios::sync_with_stdio(0);
     	cin.tie(0);
