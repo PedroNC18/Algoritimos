@@ -47,6 +47,12 @@ void setEdge(Grafo& grafo, int a, int b, int p){
     grafo.matrix[b][a]=p;
 }
  
+void setEdgeD(Grafo& grafo, int a, int b, int p){
+    if(p==0) cout << "Tu eh doido rapaz?" << endl;
+    if(grafo.matrix[a][b]==0) grafo.numEgde++;
+    grafo.matrix[a][b]=p;
+}
+
 void delEdge(Grafo& grafo, int a, int b){
     if(grafo.matrix[a][b]!=0) grafo.numEgde--;
     grafo.matrix[a][b]=0;
