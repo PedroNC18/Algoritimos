@@ -120,7 +120,7 @@ void print_lista(Grafo& grafo, int n){
     }
 }
 
-void topo(Grafo& grafo){
+void topoSort(Grafo& grafo){
     vector<int> lista;
     int v_size=v_number(grafo);
     for(int i=0;i<v_size;i++) if(grafo.grau[i]==0) lista.pb(i);
@@ -159,7 +159,7 @@ int main(void){
     cout << "Numero de arestas: " << e_number(grafo) << endl;
     cout << "Numero de vertices: " << v_number(grafo) << endl;
     print_lista(grafo, n);
-    topo(grafo);
+    topoSort(grafo);
  
     return 0;
 }
