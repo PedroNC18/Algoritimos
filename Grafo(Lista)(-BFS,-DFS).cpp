@@ -4,11 +4,13 @@
 #include<queue>
 #define pb push_back
 #define new_vet vector<vector<pair<int,int>>>
+#define INT_MAX 999999999
 using namespace std;
  
 struct Grafo {
     int numEdge;
     vector<int> mark, grau;
+    int **D;
     new_vet lista;
 };
  
@@ -17,6 +19,10 @@ void create_grafo(Grafo &grafo, int n){
     grafo.numEdge=0;
     grafo.mark.resize(n);
     grafo.grau.resize(n);
+    grafo.D = new int*[n];
+    for(int i=0;i<n;i++){
+        grafo.D[i] = new int[n];
+    }
 }
  
 int v_number(Grafo &grafo){
@@ -92,6 +98,7 @@ int weight(Grafo &grafo, int a, int b){
             return grafo.lista[a][i].second;
         }
     }
+    return 0;
 }
  
 void setMark(Grafo &grafo, int a, int val){
@@ -104,7 +111,7 @@ int getMark(Grafo &grafo, int a){
 
 void print_lista(Grafo& grafo, int n){
     int i, j;
-    for( i=0;i<n;i++){
+    for(i=0;i<n;i++){
         int str=grafo.lista[i].size();
         cout << i << "   ";
         for(j=0;j<str;j++){
@@ -143,23 +150,56 @@ void topoSort(Grafo& grafo){
     }
 }
 
+
+
+/*void Dijkstra(Grafo& grafo, int s){
+    for(int i=0;i<v.number(grafo);i++){
+        grafo.dist[i]=INT_MAX;      
+    }
+    grafo.dist[s]=0;
+    priority_queue<>
+}*/
+
+void floyd(Grafo& grafo){
+    int v_size = v_number(grafo);
+    for(int i=0;i<v_size;i++){
+        for(int j=0;j<v_size;j++){
+            if(i==j) grafo.D[i][j] = weight(grafo,i,j);
+            else if(weight(grafo,i,j)!=0) grafo.D[i][j]=weight(grafo,i,j); 
+            else grafo.D[i][j]=INT_MAX;
+        }
+    }
+    for(int k=0;k<v_size;k++){
+        for(int i=0;i<v_size;i++){
+            for(int j=0;j<v_size;j++){
+                grafo.D[i][j]=min(grafo.D[i][j],grafo.D[i][k]+grafo.D[k][j]);
+            }
+        }
+    }
+}
+    
 int main(void){
     Grafo grafo;
-    int i, n, e, a, b, p;
+    int i, n, e, a, b, p, c;
     cout << "Digite o numero de vertices: ";
     cin >> n;
     cout << "Digite o numero de arestas: ";
     cin >> e;
     create_grafo(grafo, n);
     while(e--){
-        cout << "Digite a aresta: ";
-        cin >> a >> b;
-        setEdge(grafo, a, b, 1);
+        cout << "Digite a aresta e peso: ";
+        cin >> a >> b >> c;
+        setEdge(grafo, a, b, c);
     }
     cout << "Numero de arestas: " << e_number(grafo) << endl;
     cout << "Numero de vertices: " << v_number(grafo) << endl;
     print_lista(grafo, n);
-    topoSort(grafo);
- 
+    floyd(grafo);
+    for(int i=0;i<v_number(grafo);i++){
+        for(int j=0;j<v_number(grafo);j++){
+            cout << grafo.D[i][j] << " ";
+        }
+        cout << endl;
+    }
     return 0;
 }
