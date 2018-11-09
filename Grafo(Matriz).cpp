@@ -1,12 +1,14 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include<limits.h>
 #define NV 0
 #define VV 1
 using namespace std;
  
 struct Grafo{
     int **matrix;
+    int **D;
     int numEgde;
     vector<int> mark;
 };
@@ -19,6 +21,10 @@ Grafo create_grafo(int n){
     }
     grafo.numEgde=0;
     grafo.mark.resize(n);
+    grafo.D = new int*[n];
+    for(int i=0;i<n;i++){
+        grafo.D[i] = new int[n];
+    }
     return grafo;
 }
  
@@ -90,7 +96,22 @@ void print_matrix(Grafo grafo){
         cout << endl;
     }
 }
- 
+void print_D(Grafo grafo){
+    int v_size=v_number(grafo);
+    cout << "  ";
+    for(int i=0;i<v_size;i++){
+        cout << i << " ";
+    }
+    cout << endl;
+    for(int i=0;i<v_size;i++){
+        cout << i << " ";
+        for(int j=0;j<v_size;j++){
+            cout << grafo.D[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
 int cont=0;
  
 void DFS(Grafo& grafo, int x){
@@ -132,6 +153,25 @@ void graphTransverse(Grafo& grafo){
         } 
     }
 }
+
+void floyd(Grafo& grafo){
+    int v_size = v_number(grafo);
+    for(int i=0;i<v_size;i++){
+        for(int j=0;j<v_size;j++){
+            if(i!=j && grafo.matrix[i][j]==0) grafo.D[i][j]=INT_MAX;
+            else grafo.D[i][j]=grafo.matrix[i][j];
+        }
+    }     
+    for(int k=0;k<v_size;k++){
+        for(int i=0;i<v_size;i++){
+            for(int j=0;j<v_size;j++){
+                if(grafo.D[i][k]!=INT_MAX and grafo.D[k][j]!=INT_MAX
+                and grafo.D[i][j]>grafo.D[i][k]+grafo.D[k][j])
+                grafo.D[i][j] = grafo.D[i][k]+grafo.D[k][j];    
+            }
+        }
+    }
+}
  
 int main(void){
     Grafo grafo;
@@ -149,8 +189,26 @@ int main(void){
     cout << "Numero de arestas: " << e_number(grafo) << endl;
     cout << "Numero de vertices: " << v_number(grafo) << endl;
     print_matrix(grafo);
-    graphTransverse(grafo);
+    floyd(grafo);
+    cout << cont << endl;
+    print_D(grafo);
     cout << cont << endl;
  
     return 0;
 }
+
+
+/*Digite o numero de vertices: 7
+Digite o numero de arestas: 11
+Digite a aresta e o seu peso: 0 1 7
+Digite a aresta e o seu peso: 1 2 8
+Digite a aresta e o seu peso: 0 3 5
+Digite a aresta e o seu peso: 1 3 9
+Digite a aresta e o seu peso: 1 4 7
+Digite a aresta e o seu peso: 2 4 5
+Digite a aresta e o seu peso: 3 4 15
+Digite a aresta e o seu peso: 3 5 6
+Digite a aresta e o seu peso: 4 5 8
+Digite a aresta e o seu peso: 5 6 11
+Digite a aresta e o seu peso: 6 4 9*/
+
