@@ -1,11 +1,9 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
-#include<queue>
+#include<bits/stdc++.h>
 #define pb push_back
 #define new_vet vector<vector<pair<int,int>>>
-#define INT_MAX 999999999
 using namespace std;
+
+int dist[(int)1e4];
  
 struct Grafo {
     int numEdge;
@@ -64,7 +62,7 @@ void setEdge(Grafo& grafo, int a, int b, int p){
     grafo.grau[b]++;
     sort(grafo.lista[a].begin(), grafo.lista[a].end());
 }
- 
+
 void delEdge(Grafo &grafo, int a, int b){
     int v_size=grafo.lista[a].size();
     for(int i=0;i<v_size;i++){
@@ -145,38 +143,46 @@ void topoSort(Grafo& grafo){
     }
 }
 
-
-
-/*void Dijkstra(Grafo& grafo, int s){
-    for(int i=0;i<v.number(grafo);i++){
-        grafo.dist[i]=INT_MAX;      
+void dijkstra(Grafo& grafo, int origem){
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> heap;
+    memset(dist,0x3f, sizeof(dist));
+    dist[origem]=0;
+    heap.push({0,origem});
+    while(!heap.empty()){
+        pair<int,int> rola = heap.top();
+        heap.pop();
+        int p = rola.first;
+        int v = rola.second;
+        if(p>dist[v]){
+            continue;
+        }
+        for(auto& it:grafo.lista[v]){
+            if(dist[it.first]>p+it.second){
+                dist[it.first] = p+it.second;
+                heap.push({dist[it.first],it.first});
+            }
+        }
     }
-    grafo.dist[s]=0;
-    priority_queue<>
-}*/
+    
+    
+}
    
 int main(void){
-    Grafo grafo;
+    
     int i, n, e, a, b, p, c;
-    cout << "Digite o numero de vertices: ";
-    cin >> n;
-    cout << "Digite o numero de arestas: ";
-    cin >> e;
-    create_grafo(grafo, n);
-    while(e--){
-        cout << "Digite a aresta e peso: ";
-        cin >> a >> b >> c;
-        setEdge(grafo, a, b, c);
-    }
-    cout << "Numero de arestas: " << e_number(grafo) << endl;
-    cout << "Numero de vertices: " << v_number(grafo) << endl;
-    print_lista(grafo, n);
-    floyd(grafo);
-    for(int i=0;i<v_number(grafo);i++){
-        for(int j=0;j<v_number(grafo);j++){
-            cout << grafo.D[i][j] << " ";
+    int casos;
+    cin >> casos;
+    while(casos--){
+        Grafo grafo;
+        cin >> n >> e;
+        create_grafo(grafo, n);
+        while(e--){
+            cin >> a >> b >> c;
+            setEdge(grafo, --a, --b, c);
         }
-        cout << endl;
-    }
+        cin >> a >> b;
+        dijkstra(grafo, --a);
+        (dist[--b]==0x3f3f3f3f)? cout << "NO" << endl : cout << dist[b] << endl;
+    }    
     return 0;
 }
