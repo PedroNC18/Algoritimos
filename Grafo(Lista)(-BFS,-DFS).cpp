@@ -10,7 +10,6 @@ using namespace std;
 struct Grafo {
     int numEdge;
     vector<int> mark, grau;
-    int **D;
     new_vet lista;
 };
  
@@ -19,10 +18,6 @@ void create_grafo(Grafo &grafo, int n){
     grafo.numEdge=0;
     grafo.mark.resize(n);
     grafo.grau.resize(n);
-    grafo.D = new int*[n];
-    for(int i=0;i<n;i++){
-        grafo.D[i] = new int[n];
-    }
 }
  
 int v_number(Grafo &grafo){
@@ -159,25 +154,7 @@ void topoSort(Grafo& grafo){
     grafo.dist[s]=0;
     priority_queue<>
 }*/
-
-void floyd(Grafo& grafo){
-    int v_size = v_number(grafo);
-    for(int i=0;i<v_size;i++){
-        for(int j=0;j<v_size;j++){
-            if(i==j) grafo.D[i][j] = weight(grafo,i,j);
-            else if(weight(grafo,i,j)!=0) grafo.D[i][j]=weight(grafo,i,j); 
-            else grafo.D[i][j]=INT_MAX;
-        }
-    }
-    for(int k=0;k<v_size;k++){
-        for(int i=0;i<v_size;i++){
-            for(int j=0;j<v_size;j++){
-                grafo.D[i][j]=min(grafo.D[i][j],grafo.D[i][k]+grafo.D[k][j]);
-            }
-        }
-    }
-}
-    
+   
 int main(void){
     Grafo grafo;
     int i, n, e, a, b, p, c;
